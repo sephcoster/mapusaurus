@@ -125,7 +125,7 @@ if (!window.console) console = {log: function() {}};
                         backgroundColor: '#000', 
                         '-webkit-border-radius': '10px', 
                         '-moz-border-radius': '10px', 
-                        opacity: .5, 
+                        opacity: 0.5, 
                         color: '#fff' 
                     },
                     message: '<img src="/static/basestyle/img/loading_white.gif" height="75px"> <h6>Loading HMDA Data</h6>',
@@ -139,7 +139,6 @@ if (!window.console) console = {log: function() {}};
         }
         
     }
-
 
     /* 
         ---- GET DATA SCRIPTS ----
@@ -268,20 +267,20 @@ if (!window.console) console = {log: function() {}};
         layers.Centroids.eachLayer( function(layer){
             
             // If layer has no LAR information, zero this out.
-            if( layer.volume == 0 ){
+            if( layer.volume === 0 ){
                 return false;
             }
 
-            if( layerType == 'minority' ){
-                var newStyle = {}
+            if( layerType === 'minority' ){
+                var newStyle = {};
                 _.extend(newStyle, baseStyle);
                 newStyle.fillColor = updateMinorityCircleFill(layer.geoid);
                 layer.setStyle( newStyle );
-            } else if( layerType =='seq'){
+            } else if( layerType === 'seq'){
                 layer.setStyle( seqBaseStyle );
             }
         });
-        console.log("color update complete.");
+        console.log('color update complete.');
     }
 
 
@@ -307,7 +306,7 @@ if (!window.console) console = {log: function() {}};
             hisp = (data['hispanic_perc']*100).toFixed(2);
             white = (data['non_hisp_white_only_perc']*100).toFixed(2);
             black = (data['non_hisp_black_only_perc']*100).toFixed(2);
-            asian = (data['non_hisp_asian_only_perc']*100).toFixed(2)
+            asian = (data['non_hisp_asian_only_perc']*100).toFixed(2);
             new L.Rrose({ offset: new L.Point(0,0), closeButton: false, autoPan: false })
                 .setContent('<div style="border-bottom: 1px solid gray"><b>Tract # '+ circle.geoid + '</b><br/>' +data['volume'] + ' <b>records<br />' + data['num_households'] + ' <b>households</b></div>' +
                     '<br/><b>Hispanic</b>: (' + hisp + '%)<br/><span class="spark-bullet" data-min="[' + [hisp, hisp, 100] +']"></span>' +
@@ -434,7 +433,7 @@ if (!window.console) console = {log: function() {}};
                 highB: 97
             }
         }
-    ]
+    ];
 
     function toBucket(percent) {
         var i,
@@ -446,7 +445,7 @@ if (!window.console) console = {log: function() {}};
             }
         } 
         return colorRanges[len - 1];  //  last color
-    };
+    }
 
     /* Given low and high colors and a percent, figure out the RGB of said
      * percent in that scale */
@@ -620,7 +619,7 @@ if (!window.console) console = {log: function() {}};
     // Simple function to return bounds consistently with our padding / fixed #
     function getBoundParams(){
         var bounds = map.getBounds(),
-        padding = .00;
+        padding = 0;
         return { neLat: (bounds._northEast.lat + padding).toFixed(6),
                 neLon: (bounds._northEast.lng + padding).toFixed(6),
                 swLat: (bounds._southWest.lat - padding).toFixed(6),
