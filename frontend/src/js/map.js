@@ -18,7 +18,7 @@ if (!window.console) console = {log: function() {}};
         });
 
         // Check to see if we have any parameters for category-selector
-        if( typeof loadParams.category != 'undefined'){
+        if( typeof loadParams.category !== 'undefined'){
             $('#category-selector').val( loadParams.category.values );
             layerUpdate( loadParams.category.values );
         } else {
@@ -27,14 +27,14 @@ if (!window.console) console = {log: function() {}};
         }
 
         // Check to see if we have any parameters for action-taken
-        if( typeof loadParams.action != 'undefined'){
+        if( typeof loadParams.action !== 'undefined'){
             $('#action-taken-selector').val( loadParams.action.values );
         } else {
             addParam( 'action', 'all-apps-5' );
         }
 
-        if( typeof loadParams.lh != 'undefined'){
-            var status = (loadParams.lh.values == "true");
+        if( typeof loadParams.lh !== 'undefined'){
+            var status = (loadParams.lh.values === 'true');
             $('#superSelect').prop('checked', status );
             toggleSuper(status);
         } else {
@@ -149,7 +149,7 @@ if (!window.console) console = {log: function() {}};
     dataStore = {};
     dataStore.tracts = {};
     
-    function getTractsInBounds( bounds, callback ){
+    function getTractsInBounds( bounds ){
         //TODO: Modify parameters for this endpoint to take param hooks instead of forward slash
 
         $('#bubbles_loading').show();
@@ -167,13 +167,9 @@ if (!window.console) console = {log: function() {}};
             console.log( 'no data was available at' + endpoint + '. status: ' + status );
         });
 
-        if( typeof callback === 'function' && callback() ){
-            callback;
-        }
-
     }    
 
-    function getTractData( bounds, actionTakenVal, callback ){
+    function getTractData( bounds, actionTakenVal ){
         $('#bubbles_loading').show();
         var endpoint = '/api/all/',
             params = { year: 2013,
@@ -214,11 +210,8 @@ if (!window.console) console = {log: function() {}};
             success: console.log('get API All Data request successful')
         }).fail( function( status ){
             console.log( 'no data was available at' + endpoint + '. status: ' + status );
-        });;
+        });
 
-        if( typeof callback === 'function' && callback() ){
-            callback;
-        }
     }
 
     function createTractDataObj( callback ){
@@ -232,7 +225,7 @@ if (!window.console) console = {log: function() {}};
             dataStore.tracts[geoid] = feature.properties;
             _.extend( dataStore.tracts[geoid], rawData.minority[geoid] );
 
-            if( typeof rawData.loanVolume[geoid] != 'undefined'){
+            if( typeof rawData.loanVolume[geoid] !== 'undefined'){
                 _.extend( dataStore.tracts[geoid], rawData.loanVolume[geoid] );
             } else {
                 dataStore.tracts[geoid].volume = 0;
@@ -241,7 +234,7 @@ if (!window.console) console = {log: function() {}};
         });
 
         if( typeof callback === 'function' && callback() ){
-            callback;
+            callback();
         }
     }
 
@@ -624,7 +617,7 @@ if (!window.console) console = {log: function() {}};
                 neLon: (bounds._northEast.lng + padding).toFixed(6),
                 swLat: (bounds._southWest.lat - padding).toFixed(6),
                 swLon: (bounds._southWest.lng - padding).toFixed(6)
-            }
+            };
     }
 
     function getUniques( arr ){
